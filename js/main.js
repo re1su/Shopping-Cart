@@ -66,12 +66,12 @@ let products = [
     id: 8,
     name: "Блок питания DeepCool PX1000G",
     images: "DeepCool-PX1000G.webp",
-    price: 13199
+    price: 12199
   }
 
 ]
 
-const listCarts =[]
+const listCarts = []
 
 const addToCart = (key) => {
   if (listCarts[key] == null) {
@@ -103,13 +103,12 @@ initApp()
 
 const reloadCart = () => {
   listCart.innerHTML = ''
-  let count = 0
-  let totalPrice = 0
+  let totalPrice = 0;
+  let totalQuantity = 0;
 
   listCarts.forEach((value, key) => {
-    totalPrice += value.price
-    count += value.quantity
-
+    totalPrice += value.price 
+    totalQuantity += value.quantity
     if (value !== null) {
       let newLi = document.createElement('li')
       newLi.innerHTML = `
@@ -120,29 +119,28 @@ const reloadCart = () => {
 
       <div>
         <button style="background-color: rgb(134, 51, 155)"
-        class="cartButton" onclick="changeQuantity(${key})" value="${value.quantity - 1}">-</button>
-
+        class="cartButton" onclick="changeQuantity(${key}, ${value.quantity - 1})">-</button>
+        <div class="count">${value.quantity}</div>
         <button style="background-color: rgb(134, 51, 155)"
-        class="cartButton" onclick="changeQuantity(${key})" value="${value.quantity + 1}">+</button>
+        class="cartButton" onclick="changeQuantity(${key}, ${value.quantity + 1})">+</button>
       </div>
 
       `
       listCart.appendChild(newLi)
     }
-
-    total.innerText = totalPrice.toLocaleString()
-    console.log(total);
-    quantity.innerHTML = count
   })
+
+  total.textContent = totalPrice.toLocaleString()
+  quantity.textContent = totalQuantity
 }
 
 const changeQuantity = (key, quantity) => {
-  if (quantity === 0) {
-    delete listCarts[key]
+  if (quantity == 0) {
+    listCarts.splice(key, 1)
   } else {
-    listCarts[key].quantity = quantity
+    listCarts[key].quantity = quantity;
     listCarts[key].price = quantity * products[key].price
   }
 
   reloadCart()
-}
+};
