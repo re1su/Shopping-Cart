@@ -5,9 +5,16 @@ const listCart = document.querySelector('.list-cart')
 const total = document.querySelector('.total')
 const body = document.querySelector('body')
 const quantity = document.querySelector('.quantity')
+const preloader = document.querySelector('.preloader')
+
+window.addEventListener('load', () => {
+  preloader.style.display = 'none'
+})
 
 openShopping.addEventListener('click', () => {
-  body.classList.add('active')
+  body.classList.contains('active')
+    ? body.classList.remove('active')
+    : body.classList.add('active')
 })
 closeShopping.addEventListener('click', () => {
   body.classList.remove('active')
@@ -25,47 +32,47 @@ let products = [
   {
     id: 2,
     name: "Ryzen 9 5950X OEM",
-    images: "RYZEN-9-5950X.webp",
+    images: "RYZEN-9-5950X.png",
     price: 27500
   },
 
   {
     id: 3,
     name: "ASUS ROG STRI B550-XE GAMING WIFI",
-    images: "ASUS-ROG-STRI-B550-XE-GAMING-WIFI.webp",
+    images: "ASUS-ROG-STRI-B550-XE-GAMING-WIFI.png",
     price: 37150
   },
 
   {
     id: 4,
     name: "Система охлаждения DEEPCOOL LS720",
-    images: "DEEPCOOL-LS720.webp",
+    images: "DEEPCOOL-LS720.png",
     price: 12150
   },
 
   {
     id: 5,
     name: "G.Skill TRIDENT Z Neo 32ГБ",
-    images: "G.Skill TRIDENT Z Neo-32gb.webp",
+    images: "G.Skill TRIDENT Z Neo-32gb.png",
     price: 25999
   },
 
   {
     id: 6,
     name: "Корпус LIAN-LI-PC-O1-Dynamic-XL-ROG-Certify белый",
-    images: "LIAN-LI-PC-O1-Dynamic-XL-ROG-Certify.webp",
+    images: "LIAN-LI-PC-O1-Dynamic-XL-ROG-Certify.png",
     price: 8999
   },
   {
     id: 7,
     name: "1000 ГБ SSD M.2 накопитель Samsung 980 PRO",
-    images: "Samsung-980-PRO.webp",
+    images: "Samsung-980-PRO.png",
     price: 13199
   },
   {
     id: 8,
     name: "Блок питания DeepCool PX1000G",
-    images: "DeepCool-PX1000G.webp",
+    images: "DeepCool-PX1000G.png",
     price: 12199
   }
 
@@ -129,14 +136,13 @@ const reloadCart = () => {
       listCart.appendChild(newLi)
     }
   })
-
-  total.textContent = totalPrice.toLocaleString()
+  total.textContent = `${totalPrice.toLocaleString()} ₽`
   quantity.textContent = totalQuantity
 }
 
 const changeQuantity = (key, quantity) => {
   if (quantity == 0) {
-    listCarts.splice(key, 1)
+    delete listCarts[key]
   } else {
     listCarts[key].quantity = quantity;
     listCarts[key].price = quantity * products[key].price
@@ -144,3 +150,7 @@ const changeQuantity = (key, quantity) => {
 
   reloadCart()
 };
+
+function closeShoppingCart() {
+  
+}
